@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import FileInput from './FileInput';
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    PointElement,
-    LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
@@ -33,10 +32,10 @@ const ReadExcel = () => {
         setChartData({
             labels: labels,
             datasets: [{
-                label: 'Count',
+                label: 'Sample',
                 data: values,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(247, 125, 10)',
+                backgroundColor: 'rgb(196, 187, 169)',
             }],
         });
     };
@@ -46,8 +45,13 @@ const ReadExcel = () => {
             <FileInput onFileSelect={handleFileSelect} />
             <div style={{ position: 'relative', width: '80vw', height: '80vh' }}>
                 {chartData && (
-                    <Line
+                    <Bar
                         data={chartData}
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+
+                        }}
                     />
                 )}
             </div>
