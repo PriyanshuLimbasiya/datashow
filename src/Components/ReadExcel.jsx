@@ -17,27 +17,38 @@ const ReadExcel = () => {
     const [chartData, setChartData] = useState(null);
 
     const handleFileSelect = (data) => {
-        const labels = data.slice(1).map(row => row[0]); 
-        const values = data.slice(1).map(row => row[1]); 
+        const counts = {};
+        data.slice(1).forEach(row => {
+            const value = row[0];
+            if (counts[value]) {
+                counts[value]++;
+            } else {
+                counts[value] = 1;
+            }
+        });
+
+        const labels = Object.keys(counts);
+        const values = Object.values(counts);
 
         setChartData({
             labels: labels,
             datasets: [{
-                label: 'Company', 
+                label: 'Count',
                 data: values,
-                borderColor: 'rgb(240, 193, 7)',
-                backgroundColor: 'rgba(75,192,192,0.6)',
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
             }],
-            
         });
     };
 
     return (
         <div>
             <FileInput onFileSelect={handleFileSelect} />
-            <div className='vw-75'>
+            <div style={{ position: 'relative', width: '80vw', height: '80vh' }}>
                 {chartData && (
-                    <Line   data={chartData} />
+                    <Line
+                        data={chartData}
+                    />
                 )}
             </div>
         </div>
