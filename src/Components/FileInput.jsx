@@ -7,7 +7,7 @@ const FileInput = ({ onFileSelect }) => {
     const reader = new FileReader();
 
     reader.onload = (event) => {
-      const workbook = XLSX.read(event.target.result, { type: 'binary' });
+      const workbook = XLSX.read(event.target.result, { type: 'string' });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
@@ -15,12 +15,12 @@ const FileInput = ({ onFileSelect }) => {
       onFileSelect(sheetData);
     };
 
-    reader.readAsBinaryString(file);
+    reader.readAsText(file);
   };
 
   return (
     <div className="mb-3">
-      <label htmlFor="formFile" className="form-label">Upload Excel File</label>
+      <label htmlFor="formFile" className="form-label">Upload Excel file</label>
       <input className="form-control" type="file" id="formFile" onChange={handleFileUpload} />
     </div>
   );

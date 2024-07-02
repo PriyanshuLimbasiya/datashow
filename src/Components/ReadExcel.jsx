@@ -17,12 +17,19 @@ const ReadExcel = () => {
 
     const handleFileSelect = (data) => {
         const counts = {};
+
         data.slice(1).forEach(row => {
-            const value = row[0];
-            if (counts[value]) {
-                counts[value]++;
-            } else {
-                counts[value] = 1;
+            const companyName = row[0];
+            const transactionType = row[11];
+
+            if (!counts[companyName]) {
+                counts[companyName] = 0;
+            }
+
+            if (transactionType === "Buy") {
+                counts[companyName]++;
+            } else if (transactionType === "Sell") {
+                counts[companyName]--;
             }
         });
 
@@ -32,10 +39,10 @@ const ReadExcel = () => {
         setChartData({
             labels: labels,
             datasets: [{
-                label: 'Sample',
+                label: 'Transaction Counts',
                 data: values,
                 borderColor: 'rgb(247, 125, 10)',
-                backgroundColor: 'rgb(196, 187, 169)',
+                backgroundColor: values.map(value => value >= 0 ? 'rgba(75, 192, 192, 0.6)' : 'rgba(192, 75, 75, 0.6)'),
             }],
         });
     };
@@ -43,14 +50,32 @@ const ReadExcel = () => {
     return (
         <div>
             <FileInput onFileSelect={handleFileSelect} />
-            <div style={{ position: 'relative', width: '80vw', height: '80vh' }}>
+            <div style={{ position: 'relative', width: '76vw', height: '80vh' }}>
                 {chartData && (
                     <Bar
                         data={chartData}
                         options={{
                             responsive: true,
                             maintainAspectRatio: false,
-
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (tooltipItem) {
+                                            const value = tooltipItem.raw;
+                                            return `${tooltipItem.label}: ${Math.abs(value)}`;
+                                        }
+                                    }
+                                },
+                                datalabels: {
+                                    display: true,
+                                    color: 'black',
+                                    align: 'end',
+                                    anchor: 'end',
+                                    formatter: (value, context) => {
+                                        return Math.abs(value); // or customize the label text as needed
+                                    }
+                                }
+                            }
                         }}
                     />
                 )}

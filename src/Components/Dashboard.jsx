@@ -1,18 +1,35 @@
 import React from 'react';
-import ReadExcel from './ReadExcel';
+import ReadExcel from './ReadExcel'; // Bar chart 
+import ReadExcel2 from './ReadExcel2'; // Line chart
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import './Dashboard.css';
 
 const Dashboard = () => {
   return (
     <div className='container-fluid vh-100'>
-      <div className="d-flex flex-column vh-100">
-        <Navbar />
-        <div className="d-flex flex-grow-1">
+      <div className="row h-100">
+        <div className="col-12">
+          <Navbar />
+        </div>
+        <div className="col-2 h-100">
           <Sidebar />
-          <div className="p-4 vw-100">
-            <ReadExcel />
+        </div>
+        <div className="col-10 h-100 p-4">
+          <div className="row h-100">
+            <div className="col-12 mb-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <ReadExcel />
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="card h-100">
+                <div className="card-body">
+                  <ReadExcel2 />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
