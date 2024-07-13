@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from './ApiService';
 import '../App.css'
-import './LoginLogout.css'
+
 
 const LoginLogout = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const LoginLogout = () => {
         try {
             const response = await ApiService.login(data);
             if (response.success) {
-                navigate('/dash');
+                navigate('/dashboard');
             } else {
                 console.log("Invalid ");
             }
@@ -30,7 +30,7 @@ const LoginLogout = () => {
     };
 
     return (
-        <div className='bog vh-100 '>
+        <div className=' vh-100 '>
             <div className="container-fluid w-25 ">
                 <div className="row d-flex justify-content-center align-items-center pt-5  ">
                     <div className="col-md pt-5 ">
@@ -42,7 +42,7 @@ const LoginLogout = () => {
                                 width="72"
                                 height="57"
                             />
-                            <h1 className="h3 mb-3 fw-normal text-light">Please sign in</h1>
+                            <h1 className="h3 mb-3 fw-normal ">Please sign in</h1>
                             <div className="form-floating">
                                 <input
                                     name='Email'

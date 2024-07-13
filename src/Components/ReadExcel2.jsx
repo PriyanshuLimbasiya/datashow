@@ -25,11 +25,11 @@ const ReadExcel2 = () => {
             } else {
                 counts[value] = 1;
             }
+
         });
 
         const labels = Object.keys(counts);
         const values = Object.values(counts);
-
         setChartData({
             labels: labels,
             datasets: [{

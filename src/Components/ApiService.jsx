@@ -2,8 +2,8 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const ApiService = {
-    login: async (credentials) => {
-        const { Email, Password } = credentials;
+    login: async (c) => {
+        const { Email, Password } = c;
         try {
             if (Email =="123@gmail.com" && Password =="123") {
                 return { success: true }; 

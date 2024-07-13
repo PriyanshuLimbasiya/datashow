@@ -20,7 +20,7 @@ const FileInput = ({ onFileSelect }) => {
 
   return (
     <div className="mb-3">
-      <label htmlFor="formFile" className="form-label">Upload Excel file</label>
+      <label htmlFor="formFile" className="form-label">Upload Excel file </label>
       <input className="form-control" type="file" id="formFile" onChange={handleFileUpload} />
     </div>
   );

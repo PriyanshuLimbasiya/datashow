@@ -57,25 +57,7 @@ const ReadExcel = () => {
                         options={{
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function (tooltipItem) {
-                                            const value = tooltipItem.raw;
-                                            return `${tooltipItem.label}: ${Math.abs(value)}`;
-                                        }
-                                    }
-                                },
-                                datalabels: {
-                                    display: true,
-                                    color: 'black',
-                                    align: 'end',
-                                    anchor: 'end',
-                                    formatter: (value, context) => {
-                                        return Math.abs(value); // or customize the label text as needed
-                                    }
-                                }
-                            }
+
                         }}
                     />
                 )}
