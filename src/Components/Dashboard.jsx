@@ -6,7 +6,7 @@ import '../App.css'
 
 const Dashboard = () => {
   return (
-    <div className='container-fluid vh-100 '>
+    <div className='container-fluid vh-100'>
       <div className="row h-100">
         <div className="col-md-12">
           <Navbar />
