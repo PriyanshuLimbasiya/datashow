@@ -1,118 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import DataTable from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import 'primereact/resources/themes/soho-light/theme.css';
+import './LoginLogout.css';
+import './Tabledata.css';
 
 const Table = () => {
     const [tabledata, settabledata] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [searchText, setSearchText] = useState("");
+    const [fetchdata, setfetchdata] = useState(true);
+
     const apiurl = "https://thinkbeyondidea.com/aejewel-shared/PublicApi/GetAllData";
 
     useEffect(() => {
         axios.post(apiurl)
             .then((response) => {
-                console.log("API Response:", response.data);
+                setfetchdata(false);
+                console.log(response.data);
                 settabledata(response.data);
-                setFilteredData(response.data);
             })
             .catch((error) => {
                 console.error("There was an error fetching the data!", error);
+                setfetchdata(false);
             });
     }, []);
 
-    const columns = [
-        {
-            name: 'Index',
-            cell: (row, index) => index + 1,
-
-        },
-        {
-            name: 'Symbol',
-            selector: row => row.symbol,
-            sortable: true,
-        },
-        {
-            name: 'Company',
-            selector: row => row.company,
-            sortable: true,
-        },
-        {
-            name: 'Acquirer Disposer',
-            selector: row => row.nameOfTheAcquirer_Disposer,
-
-        },
-        {
-            name: 'No of Security Acquired',
-            selector: row => row.noOfSecurities_Acquired_Displosed,
-
-        },
-        {
-            name: 'Category Of Person',
-            selector: row => row.categoryOfPerson,
-
-        },
-        {
-            name: 'Security Prior',
-            selector: row => row.noOfSecurity_Prior,
-
-        },
-        {
-            name: 'Transaction Type',
-            selector: row => row.acquisition_DisposalTransactionType,
-
-        },
-        {
-            name: 'Security Post',
-            selector: row => row.noOfSecurity_Post,
-
-        },
-        {
-            name: 'Mode Of Acquisition',
-            selector: row => row.modeOfAcquisition,
-
-        },
-        {
-            name: 'Date of Acquisition From',
-            selector: row => row.dateOfAllotment_AcquisitionFrom,
-
-        },
-    ];
-
-    const handleSearch = (event) => {
-        const value = event.target.value;
-        setSearchText(value);
-
-        const filtered = tabledata.filter(item => {
-            return (
-                item.symbol.toLowerCase().includes(value.toLowerCase()) ||
-                item.company.toLowerCase().includes(value.toLowerCase())
-            );
-        });
-
-        setFilteredData(filtered);
-    };
+    if (fetchdata) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" animationDuration=".5s" aria-label='loading' />
+            </div>
+        );
+    }
 
     return (
         <div className="container mt-5">
-            <DataTable
-                title="Acquisition Data"
-                columns={columns}
-                data={filteredData}
-                pagination
-                highlightOnHover={true}
-                subHeader
-                
-                subHeaderComponent={
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        className="form-control w-25 me-auto"
-                        value={searchText}
-                        onChange={handleSearch}
-                    />
-                }
-            />
+            <div className="card shadow-sm">
+                <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 className="card-title mb-0">Trade Data</h4>
+                </div>
+                <div className="card-body">
+                    <DataTable
+                        value={tabledata}
+                        paginator
+                        rows={5}
+                        rowsPerPageOptions={[5, 10, 25]}
+                        tableStyle={{ minWidth: '50rem' }}
+                        filterDisplay="menu"
+                        className="p-datatable-sm"
+                        style={{ fontSize: '12.4px' }}
+                    >
+                        <Column field="symbol" header="Symbol" sortable filter filterPlaceholder="Search by symbol"></Column>
+                        <Column field="company" header="Company" sortable filter filterPlaceholder="Search by company"></Column>
+                        <Column field="nameOfTheAcquirer_Disposer" sortable header="Acquirer Disposer" filter filterPlaceholder="Search by acquirer/disposer"></Column>
+                        <Column field="noOfSecurities_Acquired_Displosed" sortable header="No of Security Acquired" filter filterPlaceholder="Search by no of securities acquired"></Column>
+                        <Column field="noOfSecurity_Post" header="Security Post" sortable filter filterPlaceholder="Search by security post"></Column>
+                        <Column field="acquisition_DisposalTransactionType" header="Transaction Type" sortable filter filterPlaceholder="Search by transaction type"></Column>
+                        <Column field="categoryOfPerson" header="Category Of Person" sortable filter filterPlaceholder="Search by category"></Column>
+                        <Column field="noOfSecurity_Prior" header="Quantity" sortable filter filterPlaceholder="Search by quantity"></Column>
+                        <Column field="modeOfAcquisition" header="Mode Of Acquisition" sortable filter filterPlaceholder="Search by mode of acquisition"></Column>
+                        <Column field="dateOfAllotment_AcquisitionFrom" header="Date of Acquisition From" sortable filter filterPlaceholder="Search by date"></Column>
+                        
+                    </DataTable>
+                </div>
+            </div>
         </div>
     );
 };

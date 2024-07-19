@@ -5,8 +5,8 @@ const ApiService = {
     login: async (c) => {
         const { Email, Password } = c;
         try {
-            if (Email =="123@gmail.com" && Password =="123") {
-                return { success: true }; 
+            if (Email === "123@gmail.com" && Password === "123") {
+                return { success: true };
             } else {
                 const MySwal = withReactContent(Swal)
 
