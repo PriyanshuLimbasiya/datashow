@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import FileInput from './FileInput';
+
 
 ChartJS.register(
     CategoryScale,
@@ -43,7 +44,9 @@ const ReadExcel2 = () => {
 
     return (
         <div>
+
             <FileInput onFileSelect={handleFileSelect} />
+
             <div style={{ position: 'relative', width: '76vw', height: '70vh' }}>
                 {chartData && (
                     <Line

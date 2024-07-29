@@ -12,7 +12,7 @@ const Dashboard = () => {
           <Navbar />
         </div>
         <div className="col-md-2 h-100">
-          <Sidebar />
+          <Sidebar/>
         </div>
         <div className="col-md-10 h-100">
           <div className="row h-100">

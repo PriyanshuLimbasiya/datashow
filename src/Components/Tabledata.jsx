@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import 'primereact/resources/themes/soho-light/theme.css';
-import './LoginLogout.css';
-import './Tabledata.css';
+import { fetchTableData } from './Services/TableService';
 
 const Table = () => {
     const [tabledata, settabledata] = useState([]);
     const [fetchdata, setfetchdata] = useState(true);
 
-    const apiurl = "https://thinkbeyondidea.com/aejewel-shared/PublicApi/GetAllData";
-
     useEffect(() => {
-        axios.post(apiurl)
-            .then((response) => {
-                setfetchdata(false);
-                console.log(response.data);
-                settabledata(response.data);
-            })
-            .catch((error) => {
-                console.error("There was an error fetching the data!", error);
-                setfetchdata(false);
-            });
+        const getData = async () => {
+            try {
+                const data = await fetchTableData();
+                settabledata(data);
+                setfetchdata(false)
+            } catch (error) {
+                console.log("Error is",error);
+            } 
+        };
+        getData();
     }, []);
 
     if (fetchdata) {
@@ -36,7 +32,7 @@ const Table = () => {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container ">
             <div className="card shadow-sm">
                 <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 className="card-title mb-0">Trade Data</h4>
@@ -46,11 +42,11 @@ const Table = () => {
                         value={tabledata}
                         paginator
                         rows={5}
-                        rowsPerPageOptions={[5, 10, 25]}
+                        rowsPerPageOptions={[5, 10,15 , 25]}
                         tableStyle={{ minWidth: '50rem' }}
                         filterDisplay="menu"
                         className="p-datatable-sm"
-                        style={{ fontSize: '12.4px' }}
+                        style={{ fontSize: '12.8px' }}
                     >
                         <Column field="symbol" header="Symbol" sortable filter filterPlaceholder="Search by symbol"></Column>
                         <Column field="company" header="Company" sortable filter filterPlaceholder="Search by company"></Column>
@@ -62,7 +58,6 @@ const Table = () => {
                         <Column field="noOfSecurity_Prior" header="Quantity" sortable filter filterPlaceholder="Search by quantity"></Column>
                         <Column field="modeOfAcquisition" header="Mode Of Acquisition" sortable filter filterPlaceholder="Search by mode of acquisition"></Column>
                         <Column field="dateOfAllotment_AcquisitionFrom" header="Date of Acquisition From" sortable filter filterPlaceholder="Search by date"></Column>
-                        
                     </DataTable>
                 </div>
             </div>

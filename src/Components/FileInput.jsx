@@ -6,8 +6,8 @@ const FileInput = ({ onFileSelect }) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = (event) => {
-      const workbook = XLSX.read(event.target.result, { type: 'string' });
+    reader.onload = (e) => {
+      const workbook = XLSX.read(e.target.result, { type: 'string' });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });

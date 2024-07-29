@@ -14,13 +14,12 @@ ChartJS.register(
 
 const ReadExcel = () => {
     const [chartData, setChartData] = useState(null);
-
     const handleFileSelect = (data) => {
         const counts = {};
 
         data.slice(1).forEach(row => {
             const companyName = row[0];
-            const transactionType = row[11];
+            const transactionType = row[1];
 
             if (!counts[companyName]) {
                 counts[companyName] = 0;
@@ -47,9 +46,13 @@ const ReadExcel = () => {
         });
     };
 
+    
+
+
     return (
-        <div>
+        <div >
             <FileInput onFileSelect={handleFileSelect} />
+            
             <div style={{ position: 'relative', width: '76vw', height: '80vh' }}>
                 {chartData && (
                     <Bar

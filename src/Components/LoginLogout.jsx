@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ApiService from './ApiService';
+import ApiService from './Services/ApiService';
 import '../App.css'; 
 
 const LoginLogout = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({
-        Email: '123@gmail.com', // Your Email Data
-        Password: '123'//Your Password Data
+        Email: '', // Your Email Data
+        Password: ''//Your Password Data
     });
 
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value }); 
+        setData({ ...data, [e.target.name]: e.target.value }); //data on change
     };
 
     const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ const LoginLogout = () => {
         try {
             const response = await ApiService.login(data);
             if (response.success) {
-                navigate('/dashboard');
+                navigate('/brainlyAiScreener');
             } else {
                 console.log("Invalid credentials");
             }
