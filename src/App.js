@@ -20,7 +20,7 @@ const App = () => {
           <Route path='bar' element={<ReadExcel />} />
           <Route path='line' element={<ReadExcel2 />} />
           <Route path='table' element={<Tabledata />} />
-          <Route path='dash' element={<DashBoardData   />} />
+          <Route path='dash' element={<DashBoardData />} />
           <Route path='barchart' element={<BarChart />} />
           <Route path='linechart' element={<LineChart />} />
         </Route>

@@ -1,4 +1,3 @@
-// src/BarChart.js
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
@@ -22,35 +21,59 @@ const BarChart = () => {
     fetchBarData()
       .then(data => {
         setfetchdata(false);
-        const counts = {};
+
+        // Aggregating counts for each company
+        const counts = {
+          Buy: {},
+          Sell: {},
+          BuyAmount: {},
+          SellAmount: {},
+        };
+
 
         data.forEach(row => {
-          const companyName = row.symbol;
-          const transactionType = row.acquisition_DisposalTransactionType;
+          const companyName = row.SYMBOL;
+          const sellCount = row.count_Sell;
+          const buyCount = row.count_Buy;
+          const sellAmount = row.sum_Buy;
+          const buyAmount = row.sum_Sell
 
-          if (!counts[companyName]) {
-            counts[companyName] = 0;
+          if (!counts.Sell[companyName]) {
+            counts.Sell[companyName] = 0;
+          }
+          if (!counts.Buy[companyName]) {
+            counts.Buy[companyName] = 0;
           }
 
-          if (transactionType === "Buy") {
-            counts[companyName]++;
-          } else if (transactionType === "Sell") {
-            counts[companyName]--;
-          }
+          counts.Sell[companyName] += sellCount;
+          counts.Buy[companyName] += buyCount;
+          counts.SellAmount[companyName] += sellAmount;
+          counts.BuyAmount[companyName] += buyAmount
         });
 
-    
-        const labels = Object.keys(counts);
-        const values = Object.values(counts);
+        // Creating labels and data arrays
+        const labels = [...new Set([...Object.keys(counts.Sell), ...Object.keys(counts.SellAmount), ...Object.keys(counts.Buy), ...Object.keys(counts.BuyAmount)])];
+        const sellValues = labels.map(label => counts.Sell[label] || 0);
+        const buyValues = labels.map(label => counts.Buy[label] || 0);
+        const sellV = labels.map(label => counts.SellAmount[label]);
+        const buyV = labels.map(label => counts.BuyAmount[label]);
 
         setChartData({
           labels: labels,
-          datasets: [{
-            label: 'Transaction Counts',
-            data: values,
-            borderColor: 'rgb(247, 125, 10)',
-            backgroundColor: values.map(value => value >= 0 ? 'rgba(127, 0, 255, 0.6)' : 'rgba(192, 75, 75, 0.6)'),
-          }],
+          datasets: [
+            {
+              label: 'Buy Counts',
+              data: buyValues,
+              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+              label: 'Sell Counts',
+              data: sellValues,
+              borderColor: 'rgb(54, 162, 235)',
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            }
+          ],
         });
       })
       .catch(e => {
@@ -74,7 +97,20 @@ const BarChart = () => {
           options={{
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
 
+            },
+            scales: {
+              x: {
+                stacked: true,
+              },
+              y: {
+                stacked: true,
+              }
+            }
           }}
         />
       )}

@@ -9,6 +9,6 @@ export const fetchTableData = async () => {
         return response.data;
     } catch (error) {
         console.error("There was an error fetching the data!", error);
-        throw error;
+        throw error;4
     }
 };

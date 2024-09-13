@@ -46,13 +46,13 @@ const ReadExcel = () => {
         });
     };
 
-    
+
 
 
     return (
         <div >
             <FileInput onFileSelect={handleFileSelect} />
-            
+
             <div style={{ position: 'relative', width: '76vw', height: '80vh' }}>
                 {chartData && (
                     <Bar

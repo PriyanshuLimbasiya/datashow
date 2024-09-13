@@ -13,6 +13,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
+
 const LineChart = () => {
     const [chartData, setChartData] = useState(null);
     const [fetchdata, setfetchdata] = useState(true);
@@ -21,33 +22,33 @@ const LineChart = () => {
         fetchLineData()
             .then(data => {
                 setfetchdata(false);
-                const count = {};
+                let rowData = {};
+
                 data.forEach(row => {
-                    const value = row.symbol;
-                    if (count[value])
-                    {
-                        count[value]++;
+
+                    const label = row.SYMBOL;
+                    console.log("label", label);
+
+                    if (!rowData[label]) {
+                        rowData[label] = 0;
                     }
-                    else
-                    {
-                        count[value] = 1
-                    }
-                })
-                const labels = Object.keys(count);
-                const values = Object.values(count);
+                    rowData[label] += row.count_Sell + row.count_Buy;
+                });
+
+                const labels = Object.keys(rowData);
+                const values = Object.values(rowData);
 
                 setChartData({
                     labels: labels,
                     datasets: [{
-                        label: 'Count',
+                        label: ' Trading Data Analysis',
                         data: values,
                         borderColor: 'rgb(43, 102, 9)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     }]
-                })
-            })
-
-    }, [])
+                });
+            });
+    }, []);
 
     if (fetchdata) {
         return (
@@ -59,21 +60,20 @@ const LineChart = () => {
 
     return (
         <div>
-            <div style={{ position: 'relative', width: '76vw', height: '70vh'}}>
+            <div style={{ position: 'relative', width: '76vw', height: '70vh' }}>
                 {chartData && (
                     <Line
-                        style={{ color:'#2b6609'}}
+                        style={{ color: '#2b6609' }}
                         data={chartData}
                         options={{
                             responsive: true,
                             maintainAspectRatio: false,
-
                         }}
                     />
                 )}
             </div>
         </div>
-    )
+    );
 }
 
-export default LineChart
+export default LineChart;

@@ -56,4 +56,48 @@ input[type="file"] {
     background-color: #D3D3D3;
 }
 
+.custom-sidebar {
+    background-color: #f8f9fa;
+    /* Light background color */
+    padding: 20px;
+    height: 100vh;
+    width: 250px;
+}
+
+.custom-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #343a40;
+    /* Dark text color */
+    text-decoration: none;
+    border-radius: 0.25rem;
+    margin-bottom: 10px;
+    /* Spacing between links */
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition for hover effects */
+}
+
+.custom-nav-link:hover {
+    background-color: #e2e6ea;
+    /* Light hover background color */
+    color: #8181db;
+    /* Change text color on hover */
+}
+
+.custom-nav-link.active {
+    background-color: #b8d783;
+    /* Active link background color */
+    color: white;
+    /* Active link text color */
+    font-weight: bold;
+    /* Bold text for active link */
+}
+
 

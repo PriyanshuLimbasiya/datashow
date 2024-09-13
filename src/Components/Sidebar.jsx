@@ -1,53 +1,52 @@
 import React from 'react';
 import { House, Clipboard, Cart, BoxArrowRight, DatabaseCheck, BarChart, GraphUp } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
 
 const Sidebar = () => {
     return (
-        <div className="d-flex flex-column p-3 bg-light" style={{ width: '250px', height: '100vh' }}>
-            <ul className="nav flex-column mb-auto nav-pills">
+        <div className="d-flex flex-column p-3 bg-light custom-sidebar" style={{ width: '250px', height: '100vh', position: 'fixed' }}>
+            <ul className="nav flex-column mb-auto">
                 <li className="nav-item">
-                    <NavLink className="nav-link text-dark " to={"dash"}>
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"dash"}>
                         <House className="me-2" />
-                        Dashboard
+                        <span>Dashboard</span>
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to={"bar"} className="nav-link text-dark">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"bar"}>
                         <Clipboard className="me-2" />
-                        Qaurterly Data
+                        <span>Quarterly Data</span>
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to={"line"} className="nav-link text-dark">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"line"}>
                         <Cart className="me-2" />
-                        Analyze Data
+                        <span>Analyze Data</span>
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to={"table"} className="nav-link text-dark">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"table"}>
                         <DatabaseCheck className="me-2" />
-                        Trade Data
+                        <span>Trade Data</span>
                     </NavLink>
                 </li>
-
                 <li className="nav-item">
-                    <NavLink to={'barchart'} className="nav-link text-dark">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"barchart"}>
                         <BarChart className="me-2" />
-                        BarChart
+                        <span>BarChart</span>
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to={'linechart'} className="nav-link text-dark">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center" to={"linechart"}>
                         <GraphUp className="me-2" />
-                        LineChart
+                        <span>LineChart</span>
                     </NavLink>
                 </li>
-                <li className="nav-item">
-                    <NavLink to={'/'} className="nav-link text-dark">
+                <li className="nav-item mt-auto">
+                    <NavLink className="nav-link custom-nav-link d-flex align-items-center text-danger" to={'/'}>
                         <BoxArrowRight className="me-2" />
-                        Sign out
+                        <span>Sign out</span>
                     </NavLink>
                 </li>
             </ul>

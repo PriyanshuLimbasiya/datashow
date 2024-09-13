@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from './Services/ApiService';
-import '../App.css'; 
+import '../App.css';
 
 const LoginLogout = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({
-        Email: '', // Your Email Data
-        Password: ''//Your Password Data
+        Email: '',
+        Password: ''
     });
 
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value }); //data on change
+        setData({ ...data, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
@@ -29,22 +29,22 @@ const LoginLogout = () => {
     };
 
     return (
-        <div className="vh-100 d-flex beg justify-content-center align-items-center bg-image vw-100">
-            <div className="card bg-transparent p-4 shadow-lg beg1">
-                <div className="card-body ">
+        <div className="vh-100 vw-100 d-flex justify-content-center align-items-center bg-light bg-gradient beg">
+            <div className="card p-4 shadow-lg" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px' }}>
+                <div className="card-body">
+                    <div className="text-center mb-4">
+                        <img
+                            src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg"
+                            alt="Bootstrap logo"
+                            width="72"
+                            height="57"
+                        />
+                        <h1 className="h4 mb-3 fw-normal">Sign in to your account</h1>
+                    </div>
                     <form onSubmit={handleSubmit}>
-                        <div className="text-center mb-4">
-                            <img
-                                src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg"
-                                alt="Bootstrap logo"
-                                width="72"
-                                height="57"
-                            />
-                            <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-                        </div>
                         <div className="form-floating mb-3">
                             <input
-                                name='Email'
+                                name="Email"
                                 value={data.Email}
                                 type="email"
                                 className="form-control"
@@ -57,7 +57,7 @@ const LoginLogout = () => {
                         </div>
                         <div className="form-floating mb-3">
                             <input
-                                name='Password'
+                                name="Password"
                                 type="password"
                                 className="form-control"
                                 id="floatingPassword"
@@ -68,10 +68,17 @@ const LoginLogout = () => {
                             />
                             <label htmlFor="floatingPassword">Password</label>
                         </div>
-                        <button className="btn btn-warning  w-100" type="submit">
+                        <button className="btn btn-primary w-100" type="submit">
                             Sign in
                         </button>
                     </form>
+                    <hr className="my-4" />
+                    <div className="text-center">
+                        <p className="mb-1">Don't have an account?</p>
+                        <button className="btn btn-outline-secondary" onClick={() => navigate('/register')}>
+                            Register
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
