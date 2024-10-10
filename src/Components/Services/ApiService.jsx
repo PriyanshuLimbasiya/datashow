@@ -21,11 +21,7 @@ const ApiService = {
             if (isValidUser) {
                 return { success: true };
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Email and Password is Incorrect",
-                });
+                return { success: false, message: "Email and Password are incorrect" };
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -35,3 +31,4 @@ const ApiService = {
 };
 
 export default ApiService;
+

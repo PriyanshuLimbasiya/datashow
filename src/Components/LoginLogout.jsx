@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from './Services/ApiService';
+import Swal from 'sweetalert2';
 import '../App.css';
 
 const LoginLogout = () => {
@@ -19,9 +20,18 @@ const LoginLogout = () => {
         try {
             const response = await ApiService.login(data);
             if (response.success) {
+                localStorage.setItem('user', JSON.stringify({ Email: data.Email }));
                 navigate('/brainlyAiScreener');
             } else {
-                console.log("Invalid credentials");
+                // Clear the password field
+                setData((clearPassword) => ({ ...clearPassword, Password: '' }));
+
+                // Show error message
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: response.message || "Email and Password are incorrect",
+                });
             }
         } catch (error) {
             console.error('Error during login:', error);
